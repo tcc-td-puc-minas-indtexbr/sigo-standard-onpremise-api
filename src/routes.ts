@@ -4,6 +4,7 @@ import HelloService from "./soap/services/hello-service";
 import Soap from "./soap";
 import StandardListService from "./soap/services/standard-list-service";
 import Server from "./server";
+import StandardImportService from "./soap/services/standard-import-service";
 
 
 
@@ -37,10 +38,6 @@ export default function routes (app:Express) {
   app.get(API_ROOT + '/services', (req, res) => {
     res.set('Content-Type', 'text/html')
     res.render('services', defaultVars);
-  })
-
-  app.get(API_ROOT + '/import', (req, res) => {
-    return res.json({app: "Import currently are not implemented"})
   })
 
   /**
@@ -115,6 +112,33 @@ export default function routes (app:Express) {
     res.set('status', 400)
     res.set('Content-Type', 'text/xml')
     res.send('<error>Bad request: Not implemented</error>')
+  })
+
+  app.post(API_ROOT + '/services/StandardImport', async (req, res) => {
+    // res.set('status', 400)
+    // res.set('Content-Type', 'text/xml')
+    // res.send('<error>Bad request: Not implemented</error>')
+    let service = new StandardImportService()
+    let response = await service.execute(req)
+
+    res.set('Content-Type', 'text/xml')
+    res.send(Soap.response('standardImport', response.toXml()))
+  })
+
+  app.get(API_ROOT + '/services/StandardImport', async (req, res) => {
+    if (req.url.indexOf("?wsdl") > -1) {
+      let xml = Server.getWsdlFile('StandardImportService.wsdl')
+      xml = Server.applyVars(xml,defaultVars)
+      res.set('Content-Type', 'application/xml')
+      res.send(xml)
+    } else {
+
+      let service = new StandardImportService()
+      let response = await service.execute(req)
+
+      res.set('Content-Type', 'text/xml')
+      res.send(Soap.response('standardImport', response.toXml()))
+    }
   })
 
   app.get(API_ROOT + '/wsdl/:file_name', async (req, res) => {

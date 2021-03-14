@@ -1,0 +1,92 @@
+<definitions name="StandardImportService"
+             targetNamespace="#{host}#{root}/wsdl/StandardImportService.wsdl"
+             xmlns="http://schemas.xmlsoap.org/wsdl/"
+             xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+             xmlns:tns="#{host}#{root}/wsdl/StandardImportService.wsdl"
+             xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+             xmlns:xsi="http://www.w3.org/1999/XSL/Transform">
+
+    <types>
+        <schema targetNamespace="#{host}#{root}/wsdl/StandardImportService.wsdl"
+                xmlns="http://www.w3.org/2000/10/XMLSchema">
+            <element name="StandardImportRequest">
+                <complexType mixed="true">
+                    <sequence>
+                        <any/>
+                    </sequence>
+                </complexType>
+            </element>
+            <element name="StandardImportResponse">
+                <complexType>
+                    <all>
+                        <element name="norma" element="tns:Norma"/>
+                    </all>
+                </complexType>
+            </element>
+            <element id="Norma" name="Norma">
+                <complexType>
+                    <sequence>
+                        <element name="norma_id" xsi:type="xsd:integer"/>
+                        <element name="codigo" xsi:type="xsd:string"/>
+                        <element name="data_publicacao" xsi:type="xsd:string"/>
+                        <element name="validade" xsi:type="xsd:string"/>
+                        <element name="titulo" xsi:type="xsd:string"/>
+                        <element name="comite" xsi:type="xsd:string"/>
+                        <element name="status" xsi:type="xsd:string"/>
+                        <element name="idioma" xsi:type="xsd:string"/>
+                        <element name="organizacao" xsi:type="xsd:string"/>
+                        <element name="preco" xsi:type="xsd:string"/>
+                        <element name="moeda" xsi:type="xsd:string"/>
+                        <element name="objetivo" xsi:type="xsd:string"/>
+                        <element name="link" xsi:type="xsd:string"/>
+                        <element name="arquivo" xsi:type="xsd:string"/>
+                    </sequence>
+                </complexType>
+            </element>
+        </schema>
+    </types>
+
+    <message name="StandardImportRequest">
+        <part name="StandardImportRequest" type="tns:StandardImportRequest"/>
+    </message>
+
+    <message name="StandardImportResponse">
+        <part name="StandardImportResponse" type="tns:StandardImportResponse"/>
+    </message>
+
+    <portType name="StandardImport_PortType">
+        <operation name="standardImport">
+            <input message="tns:StandardImportRequest"/>
+            <output message="tns:StandardImportResponse"/>
+        </operation>
+    </portType>
+
+    <binding name="StandardImport_Binding" type="tns:StandardImport_PortType">
+        <soap:binding style="rpc"
+                      transport="http://schemas.xmlsoap.org/soap/http"/>
+        <operation name="standardImport">
+            <soap:operation soapAction="standardImport"/>
+            <input>
+                <soap:body
+                        encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                        namespace="urn:examples:standardimport"
+                        use="encoded"/>
+            </input>
+
+            <output>
+                <soap:body
+                        encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                        namespace="urn:examples:standardimport"
+                        use="encoded"/>
+            </output>
+        </operation>
+    </binding>
+
+    <service name="StandardImport_Service">
+        <documentation>WSDL File for StandardImportService</documentation>
+        <port binding="tns:StandardImport_Binding" name="StandardImport_Port">
+            <soap:address
+                    location="#{host}#{root}/services/StandardImport"/>
+        </port>
+    </service>
+</definitions>
