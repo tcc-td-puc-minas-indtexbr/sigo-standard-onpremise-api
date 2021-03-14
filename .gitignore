@@ -8,3 +8,4 @@ node_modules/
 /.infrastructure/terraform.tfstate.backup
 /.infrastructure/dist/deployment.zip
 /packaged.yml
+.env

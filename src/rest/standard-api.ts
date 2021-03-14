@@ -20,7 +20,6 @@ export default class StandardApi {
       .then(response => {
 
         if (response.data.hasOwnProperty('data')) {
-          console.log('response')
           return response.data.data
         }
         return []

@@ -121,8 +121,12 @@ export default function routes (app:Express) {
     let service = new StandardImportService()
     let response = await service.execute(req)
 
+    if (response.error) {
+      res.set('Status', 400)
+    }
+
     res.set('Content-Type', 'text/xml')
-    res.send(Soap.response('standardImport', response.toXml()))
+    res.send(Soap.response('standardImport', response.toXml(), response.error))
   })
 
   app.get(API_ROOT + '/services/StandardImport', async (req, res) => {
@@ -136,8 +140,12 @@ export default function routes (app:Express) {
       let service = new StandardImportService()
       let response = await service.execute(req)
 
-      res.set('Content-Type', 'text/xml')
-      res.send(Soap.response('standardImport', response.toXml()))
+      if (response.error) {
+        res.set('Status', 400)
+      }
+
+    res.set('Content-Type', 'text/xml')
+      res.send(Soap.response('standardImport', response.toXml(), response.error))
     }
   })
 
