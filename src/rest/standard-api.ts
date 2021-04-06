@@ -16,6 +16,7 @@ export default class StandardApi {
   }
 
   public async list() {
+    console.log(`${this.host}/standard`)
     return await axios.get(`${this.host}/standard`)
       .then(response => {
 

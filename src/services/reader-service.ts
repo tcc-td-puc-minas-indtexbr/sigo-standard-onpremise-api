@@ -46,9 +46,12 @@ export default class ReaderService {
       this.errorMessage = e.message
     }
 
-    if (result.hasOwnProperty('norma')) {
-      this._list = result['norma'];
+    if (result != null) {
+      if (result.hasOwnProperty('norma')) {
+        this._list = result['norma'];
+      }
     }
+
 
     return this._list;
   }

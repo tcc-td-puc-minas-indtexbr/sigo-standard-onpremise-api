@@ -87,7 +87,7 @@ export default class ImportService {
 
   private getLastId(storageList: Norma[]) {
     let lastId = 0;
-    if (storageList.length > 0) {
+    if (storageList && storageList.length > 0) {
 
       for (const key in storageList) {
         const item = storageList[key]
@@ -128,6 +128,9 @@ export default class ImportService {
   }
 
   private merge(filteredList: Norma[], storageList: Norma[]) {
-    return storageList.concat(filteredList)
+    if (Array.isArray(storageList)) {
+      return storageList.concat(filteredList)
+    }
+    return filteredList;
   }
 }
