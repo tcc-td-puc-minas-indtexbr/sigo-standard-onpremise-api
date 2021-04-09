@@ -9,3 +9,5 @@ node_modules/
 /.infrastructure/dist/deployment.zip
 /packaged.yml
 .env
+
+aws-exports.ts

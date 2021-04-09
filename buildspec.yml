@@ -2,7 +2,6 @@ version: 0.2
 env:
   #  shell: shell-tag
   variables:
-    S3_BUCKET: "generic-lambda-builds"
     PROJECT_NAME: "sigo-standard-onpremise-api"
 phases:
   install:
@@ -11,9 +10,11 @@ phases:
     commands:
       - echo Installing all requirements
       - npm install
+      - echo Download awsexport.ts file
+      - aws s3 cp s3://$ENV_S3_BUCKET/sigo-standard-onpremise-api/aws-exports.ts ./src/aws-exports.ts
   build:
     commands:
-      - echo Buldinf project
+      - echo Bulding project
       - npm run build
       - npm run copyfiles
   post_build:
